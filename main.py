@@ -128,10 +128,9 @@ def get_world_coordinates(x, y):
     ray_dir = [d / length for d in ray_dir]
 
     t = -wz1 / ray_dir[2]
-    print([wx1 + ray_dir[0] * t,wy1 + ray_dir[1] * t,0],"1")
-    return [wx1 + ray_dir[0] * t,wy1 + ray_dir[1] * t,0]
+    return [wx1 + ray_dir[0] * t,wy1 + ray_dir[1] * t,0.1]
 
-def spawn_planet(x, y, L):
+def spawn_planet(x, y, L,list):
     world_pos = get_world_coordinates(x, y)
     #print(world_pos)
     if L != 1:
@@ -139,7 +138,7 @@ def spawn_planet(x, y, L):
     else:
         planet_data = PLANETS[-1]
     new_planet = Planet(planet_data[0], planet_data[1], planet_data[2], planet_data[3], world_pos, 0)
-    planets.append(new_planet)
+    list.append(new_planet)
 
 glEnable(GL_DEPTH_TEST)
 
@@ -153,7 +152,7 @@ while running and planets_sim:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                spawn_planet(event.pos[0], event.pos[1],l)
+                spawn_planet(event.pos[0], event.pos[1],l,planets)
                 l += 1
 
         if event.type == pygame.MOUSEMOTION:
@@ -204,8 +203,8 @@ while running and solar_system_sim:
                     for i in solar_system:
                         spawn_planet2(i)
                     n += 1
-                #else:
-                    #spawn_planet(event.pos[0],event.pos[1],n)
+                else:
+                    spawn_planet(event.pos[0],event.pos[1],n,solar_system_objects)
 
 
         if event.type == pygame.MOUSEWHEEL:
