@@ -68,6 +68,7 @@ solar_system = [
 class Planet:
     def __init__(self, name, radius, mass, color, position, velocity):
         self.name = name
+        print(f"spawned {self.name}")
         self.radius = radius
         self.mass = mass
         self.color = color
@@ -111,7 +112,7 @@ class Planet:
 
 planets = []
 
-sun = Planet("sun", 0.5, 10000.0, (255, 255, 0), (0.0, 0.0, 0.0), 0)
+#sun = Planet("sun", 0.5, 10000, (255, 255, 0), (0, 0, 0), 0)
 
 def get_world_coordinates(x, y):
     viewport = glGetIntegerv(GL_VIEWPORT)
@@ -161,8 +162,8 @@ while running and planets_sim:
                 camera_y -= event.rel[1] * 0.03
 
         if event.type == pygame.MOUSEWHEEL:
-            camera_distance -= event.y * 1.0
-            camera_distance = max(5.0, min(camera_distance, 100.0))
+            camera_distance -= event.y
+            camera_distance = max(5.0, min(camera_distance, 100))
 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             planets = []
@@ -171,7 +172,7 @@ while running and planets_sim:
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
 
-    gluPerspective(45, (display[0] / display[1]), 0.1, 90.0)
+    gluPerspective(45, (display[0] / display[1]), 0.1, 90)
     glTranslatef(camera_x, camera_y, -camera_distance)
 
     for planet in planets:
